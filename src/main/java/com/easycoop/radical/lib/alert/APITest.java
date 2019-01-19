@@ -39,12 +39,17 @@ public class APITest {
 //        new SmsResource().sendSingleText(auth, msg);
         //new SmsResource().querySentMessages();
         //System.out.println("encoded string::" + Util.getEncodeCredentials());
-        EmailSender sender =  new EmailSender();
+        EmailSender sender = new EmailSender();
         List<String> emails = new ArrayList<>();
         emails.add("emmanuel.idoko@africaprudential.com");
-        emails.add("gbolahan.folarin@africaprudential.com");
+        //emails.add("gbolahan.folarin@africaprudential.com");
         //javaEmail.createEmailMessage();
-        sender.sendBulkEmail("killmewithdlord", "desterity", emails, "Java Email API", "<h1>This is an email sent by JavaMail API, testing bulk email with html</h1>");
+       
+        String subject = "Cooperative Licence Activation.";
+                String emailBody = "<p>The licence for the United Capital PLC"
+                        + ", has been activated successfully.</p>";
+        String template = Util.getEmailTemplate("C:\\Users\\emmanuel.idoko\\Documents\\development tools", "template.html");
+        sender.sendBulkEmail("killmewithdlord", "desterity", emails, subject,emailBody, template);
         
 
     }

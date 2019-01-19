@@ -5,6 +5,7 @@
  */
 package com.easycoop.radical.lib.alert;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.Message;
@@ -25,7 +26,7 @@ public class EmailSender {
     Session mailSession;
     MimeMessage emailMessage;
 
-    public void sendBulkEmail(String fromUser, String fromUserEmailPassword, List<String> emails, String subject, String emailBody) throws AddressException, MessagingException {
+    public void sendBulkEmail(String fromUser, String fromUserEmailPassword, List<String> to_emails, String subject, String emailBody, String template) throws AddressException, MessagingException {
 
         String emailPort = "587";//gmail's smtp port
 
@@ -37,12 +38,15 @@ public class EmailSender {
         mailSession = Session.getDefaultInstance(emailProperties, null);
         emailMessage = new MimeMessage(mailSession);
 
-        for (int i = 0; i < emails.size(); i++) {
-            emailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emails.get(i)));
+        for (int i = 0; i < to_emails.size(); i++) {
+            emailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(to_emails.get(i)));
         }
 
+        MessageFormat mf = new MessageFormat(template);
+        String message_html = mf.format(new Object[]{emailBody});
+
         emailMessage.setSubject(subject);
-        emailMessage.setContent(emailBody, "text/html");//for a html email
+        emailMessage.setContent(message_html, "text/html");//for a html email
         //emailMessage.setText(emailBody);// for a text email
         String emailHost = "smtp.gmail.com";
 
