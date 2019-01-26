@@ -28,6 +28,30 @@ public class TextAlert {
         this.smsUrlTarget = this.client.target(sendSmsUrl);
     }
     
+    public void sendSingleText(MessageDetails msg) {
+        //to implement
+        String username = "emmanuel.idoko";
+        String password = "Password@1";
+        try {
+            Authentication auth = new Authentication();
+            auth.setUsername(username);
+            auth.setPassword(password);
+            
+            Gson gson = new Gson();
+            String payload = gson.toJson(msg);
+            System.out.println("payload before sending..." + payload);
+            smsUrlTarget = client.target(sendSmsUrl);
+            String response = smsUrlTarget.request(MediaType.APPLICATION_JSON)
+                    .header("Authorization", "Basic " + Util.getEncodeCredentials(auth))
+                    .post(Entity.json(payload))
+                    .readEntity(String.class);
+            System.out.println("Response:::" + response);
+        } catch (Exception ex) {
+            System.out.println("Error occured due to: " + ex);
+        }
+        
+    }
+    
     public void sendSingleText(Authentication auth, MessageDetails msg) {
         try {
             Gson gson = new Gson();

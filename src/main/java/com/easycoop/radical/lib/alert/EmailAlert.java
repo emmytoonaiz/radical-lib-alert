@@ -30,6 +30,10 @@ public class EmailAlert {
         this.client = ClientBuilder.newClient();
         this.baseTarget = this.client.target(url);
     }
+    
+    public void sendSingleEmail(MessageDetails msg) {
+        //implement
+    }
 
     public void sendSingleEmail(Authentication auth, MessageDetails msg) {
         try {
